@@ -1,0 +1,214 @@
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+/**
+ *  University maintains an ArrayList called cohorts that stores the list of classes of the university.
+ *  Your task is to correctly implement the method bodies for:
+ * 
+ *  protected ArrayList<Cohort> sortMethod(ArrayList<Cohort> list, int blocks, boolean ascending, String attr)
+ *	protected boolean checkForCycles(Graph graph, Module node, Map<Module, Boolean> visited, Map<Module, Boolean> beingVisited)
+ *  protected Module searchMethod(ArrayList<Cohort> list, String moduleName)
+ *  
+ *  The above methods are called via public methods of the same name which supply 
+ *  the local modules object as a parameter. You can observe calls to these public
+ *  methods in the go methods of UniversityTest.java.  
+ */
+public class University
+{
+	private ArrayList<Cohort> cohorts;
+	private Graph graph;
+
+	public University()
+	{
+		cohorts = new ArrayList<Cohort>();
+		graph = new Graph();
+	}
+	
+	public void clear()
+	{
+		for (Cohort v : cohorts)
+		{
+			v.getBtree().clear();
+		}
+		cohorts.clear();
+		graph = new Graph();
+	}
+	/**
+	 * Add new class/cohort as well as create the graph of prerequisites
+	 * @param v the new cohort
+	 */
+	public void addClass(Cohort v)
+	{
+		cohorts.add(v);
+		if (!v.getModule().getPrerequisites().isEmpty()) {
+			for (Module m : v.getModule().getPrerequisites()) {
+				graph.insertEdge(v.getModule(), m);
+			}
+		} else {
+			graph.insertNode(v.getModule());
+		}
+	}
+	public ArrayList<Cohort> getCohort()
+	{
+		return cohorts;
+	}
+	public Graph getGraph()
+	{
+		return graph;
+	}
+	public void describeModuleList()
+	{
+		for (Cohort v : cohorts)
+		{
+			System.out.println(v.toString());
+			v.describeStudentTree();
+		}
+	}
+	
+	/**
+	 * This method calls the tree walk method for a specific cohort
+	 * 
+	 * @param val The index of the cohort that you want to call the method for
+	 * @param type The type of the tree walk - inOrder, preOrder, postOrder, or ownOrder 
+	 * 
+	 * @return A String with the names of all Students in the tree
+	 */
+	public String walkTree(int val, String type)
+	{
+		return cohorts.get(val).walkTree(type);
+	}
+	
+	/**
+	 * This method calls the find method for a specific cohort
+	 * 
+	 * @param val The index of the cohort that you want to call the method for
+	 * @param name The Student name to search for
+	 * 
+	 * @return A reference to the Student that was found or null if no Student found
+	 */
+	public Student find(int val, String name)
+	{
+		return cohorts.get(val).find(name);
+	}
+	
+	/**
+	 * This method calls the protected checkForCycle to find for cycles in the graph.
+	 * 
+	 * You should not modify this code.
+	 */
+    public boolean checkForCycles()
+    {
+    	Map<Module, Boolean> visited = new HashMap<Module, Boolean>();
+    	Map<Module, Boolean> beingVisited = new HashMap<Module, Boolean>();
+    	for (Module m : graph.getVertices()) {
+    		if (checkForCycles(this.graph, m, visited, beingVisited)) {
+    	    	return true;
+    		}
+    	}
+    	return false;
+    }
+    
+	/**
+	 * This method should find cycles in directed graphs.
+	 *
+     * @param graph The graph
+	 * @param node the current node
+	 * @param visited List of visited nodes
+	 * @param beingVisited List of nodes being visited
+	 * 
+ 	 * @return true, if there is a cycle, false otherwise
+	 */
+    protected boolean checkForCycles(Graph graph, Module node, Map<Module, Boolean> visited, Map<Module, Boolean> beingVisited)
+    {
+    	// TODO
+        return false;
+    }
+
+	/**
+	 * This method calls the protected searchMethod to search for a module
+	 * 
+	 * You should not modify this code.
+	 * 
+	 * @param moduleName Property name to be found
+	 * @return	The ArrayList 'property' that has been sorted using  sort
+	 */
+    public Module searchForModule(String moduleName)
+    {	
+    	this.sortMethod(false, "name"); // sorting before searching
+    	return searchForModule(cohorts, moduleName);
+    }
+    
+	/**
+	 * This method uses binary search to find the module
+	 * (based on the name) in the ArrayList 'cohorts'.
+	 * Assumes 'cohorts' is sorted
+	 *
+     * @param list An ArrayList of Cohorts objects to search
+	 * @param moduleName Module name to be found
+ 	 * @return	The Cohort with moduleName, or null otherwise
+	 */
+    protected Module searchForModule(ArrayList<Cohort> list, String moduleName)
+    {
+		int lb = 0;
+		int ub = list.size();
+        
+        while (lb < ub) {
+			int mid = (lb + ub) / 2;
+			Cohort c = list.get(mid);
+			int cmp = c.getModule().getName().compareTo(moduleName);
+			if (cmp == 0) {
+				return c.getModule();
+			} else if (cmp < 0) {
+				ub = mid - 1;
+			} else {
+				lb = mid + 1;
+			}
+		}
+ 
+        return null;
+    }
+    
+	/**
+	 * This method should use specified sort approach to rearrange
+	 * the references in the ArrayList 'cohorts' such that they are in 
+	 * order according to the attr (attribute) parameter.
+	 * If asc is true, this should be ascending order,
+	 * if asc is false, this should be descending order.
+	 * 
+	 * You should not modify this code.
+	 * 
+	 * @param asc True if the list should be ascending order, false for descending
+     * @param attr Attribute (name or code) that will be use during the sorting
+	 * @return	The ArrayList 'cohorts' that has been sorted
+	 */
+    public ArrayList<Cohort> sortMethod(boolean asc, String attr)
+    {	
+    	ArrayList<Cohort> sorted = new ArrayList<Cohort>(cohorts);
+    	return sortMethod(sorted, 3, asc, attr);
+    }
+    
+    /**
+	 * This method should use specified sort approach to rearrange
+	 * the references in the ArrayList 'cohorts' such that they are in 
+	 * order according to the attr (attribute) parameter.
+	 * If asc is true, this should be ascending order,
+	 * if asc is false, this should be descending order.
+	 * 
+	 * You should not modify this code.
+	 * 
+	 * @param list The cohort list to be sorted
+	 * @param block_size The size of the blocks
+	 * @param asc True if the list should be ascending order, false for descending
+     * @param attr Attribute (name or code) that will be use during the sorting
+	 * @return	The ArrayList 'cohorts' that has been sorted
+	 */
+    protected ArrayList<Cohort> sortMethod(ArrayList<Cohort> list, int block_size, boolean ascending, String attr)
+    {   	
+    	// TODO
+		return list;
+    }
+
+
+}
