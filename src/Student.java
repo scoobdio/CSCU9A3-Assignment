@@ -2,13 +2,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class Student
+public class Student extends Person
 {
 	protected static int MAX_NUM_MODULES = 5; // maximum number of modules that a student can enrol
 
-	protected String fullName;
-	protected int registrationNumber;
-	protected String email;
+//	protected String fullName;
+//	protected int registrationNumber;
+//	protected String email;
 	protected List<Module> modules;
 	
 	/**
@@ -57,44 +57,44 @@ public class Student
 	/**
 	 * @return the full name
 	 */
-	public String getFullName() {
-		return fullName;
-	}
+	//public String getFullName() {
+	//	return fullName;
+	//}
 	/**
 	 * Set/change the full name
 	 * @param fn The new full name
 	 */
-	public void setFullName(String fn) {
-		this.fullName = fn;
-	}
+	//public void setFullName(String fn) {
+	//	this.fullName = fn;
+	//}
 
 	/**
 	 * @return the registration number
 	 */
-	public int getRegistrationNumber(){
-		return registrationNumber;
-	}
+	//public int getRegistrationNumber(){
+	//	return registrationNumber;
+	//}
 	/**
 	 * Set/change the registration number
 	 * @param rn The new registration number
 	 */
-	public void setRegistrationNumber(int rn) {
-		this.registrationNumber = rn;
-	}
+	//public void setRegistrationNumber(int rn) {
+	//	this.registrationNumber = rn;
+	//}
 	
 	/**
 	 * @return the email
 	 */
-	public String getEmail(){
-		return email;
-	}
+	//public String getEmail(){
+	//	return email;
+	//}
 	/**
 	 * Set/change the email
 	 * @param em The new email
 	 */
-	public void setEmail(String em) {
-		this.email = em;
-	}
+	//public void setEmail(String em) {
+	//	this.email = em;
+	//}
 	
 	/**
 	 * Add a new module to the list of modules of the student
