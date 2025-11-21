@@ -8,9 +8,7 @@ public class Professor extends Person
 	protected double work_percentage;
 	
 	public Professor(String fn, int rn, String email, String d, double wp) {
-		this.fullName = fn;
-		this.registrationNumber = rn;
-		this.email = email;
+		super(fn, rn, email);
 		this.division = d;
 		this.work_percentage = wp;
 	}

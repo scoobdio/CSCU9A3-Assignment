@@ -16,11 +16,11 @@ public class Student extends Person
 	 * @param fn Full Name
 	 * @param rn Registration Number
 	 * @param email Email
+     *
+     * Updated to new class hierarchy
 	 */
 	public Student(String fn, int rn, String email) {
-		this.fullName = fn;
-		this.registrationNumber = rn;
-		this.email = email;
+		super(fn, rn, email);
 		this.modules = new ArrayList<>();
 	}
 
@@ -28,6 +28,8 @@ public class Student extends Person
 	 * constructor
 	 * generate a student at random
 	 * @param rnd
+     *
+     * Updated to new class hierarchy
 	 */
 	public Student(Random rnd) {
 		final String[] firstNames = {
@@ -48,9 +50,13 @@ public class Student extends Person
 		String ln = lastNames[rnd.nextInt(lastNames.length)];
 		int number = 1000000 + rnd.nextInt(899999);
 
-		this.fullName = fn + " " + ln;
-		this.registrationNumber = number;
-		this.email = fn + "." + ln + "@stir.ac.uk";
+
+        super(
+                fn + " " + ln,
+                number,
+                fn + "." + ln + "@stir.ac.uk"
+        );
+
 		this.modules = new ArrayList<>();
 	}
 

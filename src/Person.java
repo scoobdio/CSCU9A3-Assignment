@@ -4,6 +4,12 @@ public class Person {
     protected int registrationNumber;
     protected String email;
 
+    public Person(String fullName, int registrationNumber, String email) {
+        this.fullName = fullName;
+        this.registrationNumber = registrationNumber;
+        this.email = email;
+    }
+
     public String getFullName() {
         return fullName;
     }
