@@ -213,15 +213,14 @@ public class University
 
     private void quickSort(ArrayList<Cohort> list, int low, int high, boolean asc, String attr) {
         if (low < high) {
-            int pivotIndex = partition(list, low, high, asc, attr);
-            quickSort(list, low, pivotIndex - 1, asc, attr);
-            quickSort(list, pivotIndex + 1, high, asc, attr);
+            int index = partition(list, low, high, asc, attr);
+            quickSort(list, low, index - 1, asc, attr);
+            quickSort(list, index , high, asc, attr);
         }
     }
 
     private int partition(ArrayList<Cohort> list, int low, int high, boolean asc, String attr) {
         Cohort pivot = list.get((low + high) / 2);
-        String pivotValue = attr.equals("name") ? pivot.getModule().getName() : Integer.toString(pivot.getModule().getCode());
         int i = low;
         int j = high;
 
@@ -237,7 +236,7 @@ public class University
                 j--;
             }
         }
-        return i-1;
+        return i;
     }
 
     private int compareCohorts(Cohort a, Cohort b, boolean asc, String attr) {
