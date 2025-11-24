@@ -66,7 +66,8 @@ public class University
 			v.describeStudentTree();
 		}
 	}
-	
+
+
 	/**
 	 * This method calls the tree walk method for a specific cohort
 	 * 
@@ -206,9 +207,47 @@ public class University
 	 */
     protected ArrayList<Cohort> sortMethod(ArrayList<Cohort> list, int block_size, boolean ascending, String attr)
     {   	
-    	// TODO
+    	quickSort(list, 0, list.size() - 1, ascending, attr);
 		return list;
     }
 
+    private void quickSort(ArrayList<Cohort> list, int low, int high, boolean asc, String attr) {
+        if (low < high) {
+            int pivotIndex = partition(list, low, high, asc, attr);
+            quickSort(list, low, pivotIndex - 1, asc, attr);
+            quickSort(list, pivotIndex + 1, high, asc, attr);
+        }
+    }
+
+    private int partition(ArrayList<Cohort> list, int low, int high, boolean asc, String attr) {
+        Cohort pivot = list.get((low + high) / 2);
+        String pivotValue = attr.equals("name") ? pivot.getModule().getName() : Integer.toString(pivot.getModule().getCode());
+        int i = low;
+        int j = high;
+
+        while (i <= j) {
+            while (compareCohorts(list.get(i), pivot, asc, attr) < 0) i++;
+            while (compareCohorts(list.get(j), pivot, asc, attr) > 0) j--;
+
+            if (i <= j) {
+                Cohort temp = list.get(i);
+                list.set(i, list.get(j));
+                list.set(j, temp);
+                i++;
+                j--;
+            }
+        }
+        return i-1;
+    }
+
+    private int compareCohorts(Cohort a, Cohort b, boolean asc, String attr) {
+        int cmp;
+        if (attr.equals("name")) {
+            cmp = a.getModule().getName().compareTo(b.getModule().getName());
+        } else { // attr is "code"
+            cmp = Integer.compare(a.getModule().getCode(), b.getModule().getCode());
+        }
+        return asc ? cmp : -cmp;
+    }
 
 }
