@@ -201,7 +201,7 @@ public class BinaryTree {
 
 		if (order == 0) {
 			return n.getNodeObject();
-		} else if (order > 0 && n.hasLeft()) {
+		} else if (order < 0 && n.hasLeft()) {
 			return find(name, n.left());
 		} else if (n.hasRight()) {
 			return find(name, n.right());
