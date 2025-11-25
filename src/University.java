@@ -211,6 +211,16 @@ public class University
 		return list;
     }
 
+    /**
+     * This is a recursive quickSort - the list is split around a pivot (via partition()) and recursively sorts left and right sides.
+     * It inherits the sorting order and which attribute is to be sorted from compareCohorts().
+     *
+     * @param list  list of Cohorts to be sorted
+     * @param low   starting index of current subsection
+     * @param high  final index of current subsection
+     * @param asc   ascending if true, descending if false
+     * @param attr  determines which attribute to sort by - "name" or "code"
+     */
     private void quickSort(ArrayList<Cohort> list, int low, int high, boolean asc, String attr) {
         if (low < high) {
             int index = partition(list, low, high, asc, attr);
@@ -219,6 +229,19 @@ public class University
         }
     }
 
+    /**
+     * Partition step of quicksort - using middle element as the pivot.
+     *
+     * Elements are reordered so that anything less than the pivot point are moved to the left side.
+     * Anything greater than the pivot point are moved to the right side.
+     *
+     * @param list  list of Cohorts to be sorted
+     * @param low   starting index of current subsection
+     * @param high  final index of current subsection
+     * @param asc   ascending if true, descending if false
+     * @param attr  determines which attribute to sort by - "name" or "code"
+     * @return  returns the index which separates the left and right partitions
+     */
     private int partition(ArrayList<Cohort> list, int low, int high, boolean asc, String attr) {
         Cohort pivot = list.get((low + high) / 2);
         int i = low;
@@ -239,6 +262,15 @@ public class University
         return i;
     }
 
+    /**
+     * Compares two cohorts by either module name or code, in either ascending or descending order
+     *
+     * @param a     cohort 1
+     * @param b     cohort 2
+     * @param asc   ascending if true, descending if false
+     * @param attr  determines which attribute to sort by - "name" or "code"
+     * @return      returns negative if a < b, zero if a = b and positive if a > b
+     */
     private int compareCohorts(Cohort a, Cohort b, boolean asc, String attr) {
         int cmp;
         if (attr.equals("name")) {
