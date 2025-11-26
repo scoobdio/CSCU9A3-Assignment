@@ -189,7 +189,21 @@ public class University
     	ArrayList<Cohort> sorted = new ArrayList<Cohort>(cohorts);
     	return sortMethod(sorted, 3, asc, attr);
     }
-    
+
+    /**
+     * Records time taken for sortMethod to be carried out.
+     *
+     * @param list
+     * @param asc
+     * @param attr
+     * @return
+     */
+    public long timedSort(ArrayList<Cohort> list, boolean asc, String attr){
+        long start = System.nanoTime();
+        sortMethod(list, 3, asc, attr);
+        return System.nanoTime() - start;
+    }
+
     /**
 	 * This method should use specified sort approach to rearrange
 	 * the references in the ArrayList 'cohorts' such that they are in 

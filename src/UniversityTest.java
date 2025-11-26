@@ -242,7 +242,7 @@ public class UniversityTest {
 
 	/**
 	 * A test for the sorting method
-	 */
+	 *
 	@Test
 	public void sortingSpeedTest() {
 		// some example code to generate 100 students at random
@@ -255,6 +255,34 @@ public class UniversityTest {
 
 
 	}
+    */
+
+    @Test
+    public void sortingSpeedTest(){
+        University uni = new University();
+        Professor placeholder = new Professor("Test", 1, "placeholder@stirling.ac.uk", "CSCU9A3", 1.0);
+        int[] sizes = { 1000, 2000, 4000, 8000, 16000};
+
+        for (int n : sizes) {
+            ArrayList<Cohort> list = new ArrayList<>();
+
+            Random r = new Random(1);
+
+            for (int i = 0; i < n; i++) {
+                String moduleName = "Module" + r.nextInt(1000000);
+                int moduleCode = r.nextInt(1000000);
+                Module m = new Module(moduleCode, moduleName);
+
+                Cohort c = new Cohort(m, placeholder);
+                list.add(c);
+            }
+
+            long time = uni.timedSort(list, true, "name");
+
+            System.out.println("n = " + n + " -> time = " + time + " ns");
+        }
+    }
+
 	
 	/**
 	 * A test for the module enrolment
