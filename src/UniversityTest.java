@@ -261,12 +261,12 @@ public class UniversityTest {
     public void sortingSpeedTest(){
         University uni = new University();
         Professor placeholder = new Professor("Test", 1, "placeholder@stirling.ac.uk", "CSCU9A3", 1.0);
-        int[] sizes = { 1000, 2000, 4000, 8000, 16000};
+        int[] sizes = { 10000, 20000, 40000, 80000, 160000};
 
         for (int n : sizes) {
             ArrayList<Cohort> list = new ArrayList<>();
 
-            Random r = new Random(1);
+            Random r = new Random();
 
             for (int i = 0; i < n; i++) {
                 String moduleName = "Module" + r.nextInt(1000000);

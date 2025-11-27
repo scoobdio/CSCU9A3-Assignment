@@ -19,6 +19,8 @@ public class University
 {
 	private ArrayList<Cohort> cohorts;
 	private Graph graph;
+    public long comparisonCount = 0; // Count of comparisons for quickSort testing
+    public long swapCount = 0; // Count of swaps for quickSort testing
 
 	public University()
 	{
@@ -199,9 +201,18 @@ public class University
      * @return
      */
     public long timedSort(ArrayList<Cohort> list, boolean asc, String attr){
+        // Resets counters
+        comparisonCount = 0;
+        swapCount = 0;
+
         long start = System.nanoTime();
         sortMethod(list, 3, asc, attr);
+
+        System.out.println("Comparisons: " + comparisonCount);
+        System.out.println("Swaps: " + swapCount);
+
         return System.nanoTime() - start;
+
     }
 
     /**
@@ -269,6 +280,7 @@ public class University
                 Cohort temp = list.get(i);
                 list.set(i, list.get(j));
                 list.set(j, temp);
+                swapCount++;
                 i++;
                 j--;
             }
@@ -286,6 +298,7 @@ public class University
      * @return      returns negative if a < b, zero if a = b and positive if a > b
      */
     private int compareCohorts(Cohort a, Cohort b, boolean asc, String attr) {
+        comparisonCount++;
         int cmp;
         if (attr.equals("name")) {
             cmp = a.getModule().getName().compareTo(b.getModule().getName());
