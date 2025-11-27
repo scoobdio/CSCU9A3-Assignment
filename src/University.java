@@ -125,7 +125,27 @@ public class University
 	 */
     protected boolean checkForCycles(Graph graph, Module node, Map<Module, Boolean> visited, Map<Module, Boolean> beingVisited)
     {
-    	// TODO
+    	if (Boolean.TRUE.equals(beingVisited.get(node))) {
+            return true;
+        }
+
+        // skip if processed
+        if (Boolean.TRUE.equals(visited.get(node))) {
+            return true;
+        }
+
+        // mark as visited on current path
+        beingVisited.put(node, true);
+
+        // recursively check through all adjacent nodes
+        for (Module adjacent : graph.getAdj(node)) {
+            if (checkForCycles(graph, adjacent, visited, beingVisited))
+                return true;
+        }
+
+        // finished processing, mark as visited and remove from current path.
+        beingVisited.put(node, false);
+        visited.put(node, true);
         return false;
     }
 
