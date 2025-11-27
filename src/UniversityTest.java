@@ -261,7 +261,7 @@ public class UniversityTest {
     public void sortingSpeedTest(){
         University uni = new University();
         Professor placeholder = new Professor("Test", 1, "placeholder@stirling.ac.uk", "CSCU9A3", 1.0);
-        int[] sizes = { 10000, 20000, 40000, 80000, 160000};
+        int[] sizes = { 100000, 200000, 400000, 800000, 1600000};
 
         for (int n : sizes) {
             ArrayList<Cohort> list = new ArrayList<>();
