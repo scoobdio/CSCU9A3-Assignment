@@ -291,11 +291,68 @@ public class UniversityTest {
 	
 	/**
 	 * A test for the sorting method
+     * Modules and cohorts are created, with the classes added to University 'stir'.
+     * Firstly sorted in ascending order by name (alphabetically).
+     * Second test sorted in descending order by module code.
 	 */
 	@Test
 	public void sortingTest() {
-		// TODO
+        Professor prof = new Professor("Test", 1, "placeholder@stirling.ac.uk", "CSCU9A3", 1.0);
+
+        Module mod1 = new Module(100, "Mathematics");
+        Module mod2 = new Module(50, "Data Structures");
+        Module mod3 = new Module(75, "Algorithms");
+
+        Cohort cohort1 = new Cohort(mod1, prof);
+        Cohort cohort2 = new Cohort(mod2, prof);
+        Cohort cohort3 = new Cohort(mod3, prof);
+
+        University stir = new University();
+        stir.addClass(cohort1);
+        stir.addClass(cohort2);
+        stir.addClass(cohort3);
+
+        // Test ascending by name
+        ArrayList<Cohort> nameSort = stir.sortMethod(true, "name");
+        assertEquals("Algorithms", nameSort.get(0).getModule().getName());
+        assertEquals("Data Structures", nameSort.get(1).getModule().getName());
+        assertEquals("Mathematics", nameSort.get(2).getModule().getName());
+
+        // Test descending by code
+        ArrayList<Cohort> codeSort = stir.sortMethod(false, "code");
+        assertEquals(100, codeSort.get(0).getModule().getCode());
+        assertEquals(75, codeSort.get(1).getModule().getCode());
+        assertEquals(50, codeSort.get(2).getModule().getCode());
 	}
+
+    /**
+     * This tests how the sort method handles duplicate name entries.
+     * Duplicate name entry is added (with different module code) and sorted in ascending order by name.
+     * ArrayList should still be populated as normal.
+     */
+    @Test
+    public void sortTestDuplicate() {
+        Professor prof = new Professor("Test", 1, "placeholder@stirling.ac.uk", "CSCU9A3", 1.0);
+
+        Module mod1 = new Module(100, "Data Structures");
+        Module mod2 = new Module(50, "Data Structures");
+        Module mod3 = new Module(75, "Algorithms");
+
+        Cohort cohort1 = new Cohort(mod1, prof);
+        Cohort cohort2 = new Cohort(mod2, prof);
+        Cohort cohort3 = new Cohort(mod3, prof);
+
+        University stir = new University();
+        stir.addClass(cohort1);
+        stir.addClass(cohort2);
+        stir.addClass(cohort3);
+
+        // Test ascending by name
+        ArrayList<Cohort> nameSort = stir.sortMethod(true, "name");
+        assertEquals("Algorithms", nameSort.get(0).getModule().getName());
+        assertEquals("Data Structures", nameSort.get(1).getModule().getName());
+        assertEquals("Data Structures", nameSort.get(2).getModule().getName());
+    }
 
 	/**
 	 * A test for the sorting method
@@ -317,7 +374,7 @@ public class UniversityTest {
     @Test
     public void sortingSpeedTest(){
         University uni = new University();
-        Professor placeholder = new Professor("Test", 1, "placeholder@stirling.ac.uk", "CSCU9A3", 1.0);
+        Professor prof = new Professor("Test", 1, "placeholder@stirling.ac.uk", "CSCU9A3", 1.0);
         int[] sizes = { 100000, 200000, 400000, 800000, 1600000};
 
         for (int n : sizes) {
@@ -330,7 +387,7 @@ public class UniversityTest {
                 int moduleCode = r.nextInt(1000000);
                 Module m = new Module(moduleCode, moduleName);
 
-                Cohort c = new Cohort(m, placeholder);
+                Cohort c = new Cohort(m, prof);
                 list.add(c);
             }
 
