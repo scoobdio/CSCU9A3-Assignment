@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * This UniversityTest class provides different methods of checking the behaviour
@@ -191,11 +191,48 @@ public class UniversityTest {
 	
 	/**
 	 * A test for the tree walk
+     *  Cohort is created and populated with a couple of students.
+     *  walkTree is called and assertTrue used to confirm the presence of the student names.
+     *  Result is split by , and stored in names[] and assertTrue used to confirm correct positions.
+     *  Repeated for customWalk.
 	 */
 	@Test
 	public void walkTest() {
-    	// TODO
+    	Cohort cohort = new Cohort(new Module(1, "Test"), new Professor("Test", 1, "placeholder@stir.ac.uk","CSCU9A3", 1.0));
+        cohort.addStudent(new Student("Greg", 1, "greg@stir.ac.uk"));
+        cohort.addStudent(new Student("definitelyNotGreg", 1, "definitelynotgreg@stir.ac.uk"));
+        cohort.addStudent(new Student("certainlyNotGreg", 1, "certainlynotgreg@stir.ac.uk"));
+
+        String result = cohort.walkTree("inOrder");
+        assertTrue(result.contains("Greg"));
+        assertTrue(result.contains("definitelyNotGreg"));
+        assertTrue(result.contains("certainlyNotGreg"));
+
+        String[] names = result.split(",");
+        assertEquals("Greg", names[0]);
+        assertEquals("certainlyNotGreg", names[1]);
+        assertEquals("definitelyNotGreg", names[2]);
+
+        result = cohort.walkTree("");
+        assertTrue(result.contains("Greg"));
+        assertTrue(result.contains("definitelyNotGreg"));
+        assertTrue(result.contains("certainlyNotGreg"));
+
+        names = result.split(",");
+        assertEquals("Greg", names[0]);
+        assertEquals("definitelyNotGreg", names[1]);
+        assertEquals("certainlyNotGreg", names[2]);
+
 	}
+
+    /**
+     *
+     */
+    @Test
+    public void walkTestEmpty() {
+        Cohort cohort = new Cohort(new Module(1, "Test"), new Professor("Test", 1, "placeholder@stir.ac.uk","CSCU9A3", 1.0));
+        assertEquals("Empty Tree!", cohort.walkTree("inOrder"));
+    }
 	
 
 	/**
