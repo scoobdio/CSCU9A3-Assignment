@@ -245,9 +245,29 @@ public class UniversityTest {
 	
 	/**
 	 * A test for the tree find method
+     * Cohort is created and populated with students.
+     * Students' data is stored as variable to then be compared to output of cohort.find() by assertEquals.
+     * Edge case of searching for a student that doesn't exist is covered by assertNull.
 	 */
 	@Test
 	public void findTest() {
+        Cohort cohort = new Cohort(new Module(1, "Test"), new Professor("Test", 1, "placeholder@stir.ac.uk","CSCU9A3", 1.0));
+
+        Student student1 = new Student("Greg", 1, "greg@stir.ac.uk");
+        Student student2 = new Student("definitelyNotGreg", 1, "definitelynotgreg@stir.ac.uk");
+        Student student3 = new Student("certainlyNotGreg", 1, "certainlynotgreg@stir.ac.uk");
+
+        cohort.addStudent(student1);
+        cohort.addStudent(student2);
+        cohort.addStudent(student3);
+
+        assertEquals(student1, cohort.find("Greg"));
+        assertEquals(student2, cohort.find("definitelyNotGreg"));
+        assertEquals(student3, cohort.find("certainlyNotGreg"));
+
+        // Edge case for non-existent student
+        assertNull(cohort.find("notGreg"));
+
 
 	}
 
