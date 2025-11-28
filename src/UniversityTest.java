@@ -237,11 +237,46 @@ public class UniversityTest {
 
 	/**
 	 * A test for the graph loop
+     *
 	 */
 	@Test
 	public void loopSearchTest() {	
-    	// TODO
+    	University stir = new University();
+        Professor prof = new Professor("Test", 1, "placeholder@stirling.ac.uk", "CSCU9A3", 1.0);
+
+        Module prereq1 = new Module(1, "Data Structures");
+        Module prereq2 = new Module(2, "Algorithms");
+
+        ArrayList<Module> prereqs = new ArrayList<>();
+        prereqs.add(prereq1);
+        prereqs.add(prereq2);
+
+        Module mod = new Module(3, "Mathematics", prereqs);
+
+        stir.addClass(new Cohort(mod, prof));
+
+        assertTrue(stir.getGraph().getVertices().contains(mod));
+
+        assertTrue(stir.getGraph().getAdj(mod).contains(prereq1));
+        assertTrue(stir.getGraph().getAdj(mod).contains(prereq2));
+
 	}
+
+    @Test
+    public void loopSearchTestNoReqs(){
+        University stir = new University();
+        Professor prof = new Professor("Test", 1, "placeholder@stirling.ac.uk", "CSCU9A3", 1.0);
+
+        Module mod = new Module(1, "Introduction");
+        Cohort coh = new Cohort(mod,prof);
+
+        stir.addClass(coh);
+
+        assertTrue(stir.getGraph().getVertices().contains(mod));
+
+        // Shouldn't be any Adj nodes
+        assertTrue(stir.getGraph().getAdj(mod).isEmpty());
+    }
 	
 	/**
 	 * A test for the tree find method
@@ -284,10 +319,29 @@ public class UniversityTest {
 	 * A test for the search method
 	 */
 	@Test
-	public void searchTest() {	
-    	// TODO
+	public void searchTest() {
+        Professor prof = new Professor("Test", 1, "placeholder@stirling.ac.uk", "CSCU9A3", 1.0);
+        Cohort cohort = new Cohort(new Module(1, "Test"), new Professor("Test", 1, "placeholder@stir.ac.uk","CSCU9A3", 1.0));
+
+        University stir = new University();
+
+        stir.addClass(new Cohort(new Module(1, "Data Structures"), prof));
+        stir.addClass(new Cohort(new Module(2, "Mathematics"), prof));
+        stir.addClass(new Cohort(new Module(3, "Algorithms"), prof));
+
+        Module mod = stir.searchForModule("Algorithms");
+        assertNotNull(mod);
+        assertEquals("Algorithms", mod.getName());
 	}
-	
+
+   @Test
+   public void searchTestEmpty(){
+        University stir = new University();
+        Module mod = stir.searchForModule("Data Structures");
+        assertNull(mod);
+   }
+
+
 	
 	/**
 	 * A test for the sorting method

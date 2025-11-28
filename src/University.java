@@ -159,7 +159,7 @@ public class University
 	 */
     public Module searchForModule(String moduleName)
     {	
-    	this.sortMethod(false, "name"); // sorting before searching
+    	this.sortMethod(true, "name"); // sorting before searching
     	return searchForModule(cohorts, moduleName);
     }
     
@@ -246,8 +246,7 @@ public class University
 	 * 
 	 * @param list The cohort list to be sorted
 	 * @param block_size The size of the blocks
-	 * @param asc True if the list should be ascending order, false for descending
-     * @param attr Attribute (name or code) that will be use during the sorting
+	 * @param attr Attribute (name or code) that will be use during the sorting
 	 * @return	The ArrayList 'cohorts' that has been sorted
 	 */
     protected ArrayList<Cohort> sortMethod(ArrayList<Cohort> list, int block_size, boolean ascending, String attr)
